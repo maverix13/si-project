@@ -119,4 +119,4 @@ Based on the confidence interval analysis above, from the data it can be conclud
 
 Also, we can conclude that delivery method does not provide an overall impact. But for lower dosage (0.5 mg and 1 mg) OJ had a higher impact on tooth length while 2 mg dosage delivery method has no impact.
 
-It was assumed that population assignment was randomized and hence equal variances are used. 
+It was assumed that population assignment of the subjects was randomized across delivery methods and dosage so that equal variances can be used. 
