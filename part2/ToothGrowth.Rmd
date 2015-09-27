@@ -2,9 +2,10 @@
 title: "Statistical Inference Tooth Growth"
 author: "maverix13"
 date: "September 27, 2015"
-output: 
-  html_document: 
+output:
+  html_document:
     keep_md: yes
+  pdf_document: default
 ---
 
 #Synopsis
