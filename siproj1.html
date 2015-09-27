@@ -110,9 +110,9 @@ ggplot(df, aes(x=MeanValue)) + ggtitle(&quot;Averages of Exponential Random Vari
 <div id="sample-variance-versus-theoretical-variance" class="section level1">
 <h1>Sample Variance versus Theoretical Variance</h1>
 <p>The standard deviation of expoenetial distribution is also 1/lambda. According to Central Limit theorem, one useful way to think about is that sample average is approximately normally distributed with N(mu, sigma^2/n) where mu and sigma are theoretical mean and standard deviation.</p>
-<pre class="r"><code>theoreticalVar &lt;- (1/lambda)^2/n
-simulatedVar &lt;- var(simulatedMeans)</code></pre>
-<p>In comparison to theoretical variance 0.625, simulated variance of the distribution is 0.6004928. According to CLT, as the number of simulation increases the sample averages should approach to normal distribution with mean and standard deviation close to theoretical values. Based on the previous statement, conclusion can be drawn that instead of 1000 simulations, if there are million simulations simulated and theoretical variance should be close to each other.</p>
+<pre class="r"><code>theoreticalVar &lt;- (1/lambda)^2
+simulatedVar &lt;- var(simulatedMeans) * n</code></pre>
+<p>In comparison to theoretical variance 25, simulated variance of the distribution is 24.0197135. According to CLT, as the number of simulation increases the sample averages should approach to normal distribution with mean and standard deviation close to theoretical values. Based on the previous statement, conclusion can be drawn that instead of 1000 simulations, if there are million simulations simulated and theoretical variance should be close to each other.</p>
 </div>
 <div id="distribution" class="section level1">
 <h1>Distribution</h1>

@@ -63,11 +63,11 @@ The standard deviation of expoenetial distribution is also 1/lambda.
 According to Central Limit theorem, one useful way to think about is that sample average is approximately normally distributed with N(mu, sigma^2/n) where mu and sigma are theoretical mean and standard deviation.
 
 ```r
-theoreticalVar <- (1/lambda)^2/n
-simulatedVar <- var(simulatedMeans)
+theoreticalVar <- (1/lambda)^2
+simulatedVar <- var(simulatedMeans) * n
 ```
 
-In comparison to theoretical variance 0.625, simulated variance of the distribution is 0.6004928.
+In comparison to theoretical variance 25, simulated variance of the distribution is 24.0197135.
 According to CLT, as the number of simulation increases the sample averages should approach to normal distribution with mean and standard deviation close to theoretical values. Based on the previous statement, conclusion can be drawn that instead of 1000 simulations, if there are million simulations simulated and theoretical variance should be close to each other.
 
 #Distribution

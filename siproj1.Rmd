@@ -2,9 +2,10 @@
 title: "Statistical Inference Using Exponential Distribution"
 author: "maverix13"
 date: "September 27, 2015"
-output: 
-  html_document: 
+output:
+  html_document:
     keep_md: yes
+  pdf_document: default
 ---
 
 #Overview 
@@ -53,8 +54,8 @@ ggplot(df, aes(x=MeanValue)) + ggtitle("Averages of Exponential Random Variables
 The standard deviation of expoenetial distribution is also 1/lambda.
 According to Central Limit theorem, one useful way to think about is that sample average is approximately normally distributed with N(mu, sigma^2/n) where mu and sigma are theoretical mean and standard deviation.
 ```{r}
-theoreticalVar <- (1/lambda)^2/n
-simulatedVar <- var(simulatedMeans)
+theoreticalVar <- (1/lambda)^2
+simulatedVar <- var(simulatedMeans) * n
 ```
 
 In comparison to theoretical variance `r theoreticalVar`, simulated variance of the distribution is `r simulatedVar`.
