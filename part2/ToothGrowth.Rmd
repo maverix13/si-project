@@ -1,0 +1,121 @@
+---
+title: "Statistical Inference Tooth Growth"
+author: "maverix13"
+date: "September 27, 2015"
+output: 
+html_document: 
+keep_md: yes
+---
+
+#Synopsis
+
+This document analyzes the ToothGrowth data in the R datasets package. Following step are performed for statistical inference. 
+
+1. Load the ToothGrowth data and perform some basic exploratory data analyses 
+2. Provide a basic summary of the data.
+3. Use confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose.
+4. State your conclusions and the assumptions needed for your conclusions. 
+
+# Load Tooth Growth Data
+```{r}
+library(ggplot2)
+
+data("ToothGrowth")
+summary(ToothGrowth)
+unique(ToothGrowth$dose)
+unique(ToothGrowth$supp)
+```
+
+The response is the length of odontoblasts (teeth) in each of 10 guinea pigs at each of three dose levels of Vitamin C (0.5, 1, and 2 mg) with each of two delivery methods (orange juice or ascorbic acid).
+
+# Exploratory Data Analysis
+
+### Examine tooth length against three dose levels of Vitamin C
+
+```{r}
+ggplot(aes(x = factor(dose), y = len), data = ToothGrowth) + 
+  geom_boxplot(aes(fill = factor(dose))) + xlab("Dose of Vitamin C") + ylab("Tooth Length")
+```
+
+As the above plot shows, there is a clear relation between lenth of teeth with the dose levels of vitamin C. The higher dosage resulted in more tooth length.
+
+### Examine tooth length against delivery methods
+
+```{r}
+ggplot(aes(x = factor(supp), y = len), data = ToothGrowth) + 
+  geom_boxplot(aes(fill = factor(supp))) + xlab("Delivery Method") + ylab("Tooth Length")
+```
+
+Even though there is an overlap but OJ appears to be marginally better.
+
+### Examine tooth length against dose levels of Vitamin C faceted by delivery method
+
+```{r}
+ggplot(ToothGrowth, aes(x=factor(dose),y=len,fill=factor(dose))) +
+  geom_boxplot() + facet_grid(.~supp) + 
+  scale_x_discrete("Dose of Vitamin C") + 
+  scale_y_continuous("Tooth Length") 
+```
+
+OJ is a better delivery method when dosage levels are 0.5 and 1 mg but does not show any improvement for 2 mg dose.
+
+# Data Summary
+
+Summary of data, along with unique values for Vitamin C dose and delivery method are shown in load section.
+
+```{r}
+table(ToothGrowth$dose, ToothGrowth$supp)
+str(ToothGrowth)
+```
+
+Data consists of 60 records with 30 each for delivery method and 10 each for each dosage level for each delivery method.
+
+# Confidence Intervals and Hypothesis
+
+Based on the exploratory data analysis, we already saw that increase in the dose level results in larger tooth length. While delivery method does not provide any significant difference overall, but at lower dosage level OJ provided a better performance. Hence, the tests in the section will compare: 
+
+1. Delivery Method as a factor
+2. Dosage as a factor
+3. Delivery Method as a factor for each dosage level
+
+### Delivery Method as a factor
+
+```{r}
+t.test(len ~ supp, paired = F, data = ToothGrowth)
+```
+
+With a confidence interval of [-0.1710156  7.5710156] which contains 0 results in not denying null hypothesis. 
+
+### Dosage as a factor
+
+```{r}
+dose51 <- subset(ToothGrowth, dose %in% c(0.5, 1.0))
+dose52 <- subset(ToothGrowth, dose %in% c(0.5, 2.0))
+dose12 <- subset(ToothGrowth, dose %in% c(1.0, 2.0))
+t.test(len ~ dose, paired = F, data = dose51)
+t.test(len ~ dose, paired = F, data = dose52)
+t.test(len ~ dose, paired = F, data = dose12)
+```
+
+The confidence interval for each of the cases above allows rejection of null hypothesis.
+
+### Delivery Method as a factor for each dosage level
+
+```{r}
+dose5 <- subset(ToothGrowth, dose == 0.5)
+dose1 <- subset(ToothGrowth, dose == 1.0)
+dose2 <- subset(ToothGrowth, dose == 2.0)
+t.test(len ~ supp, paired = F, data = dose5)
+t.test(len ~ supp, paired = F, data = dose1)
+t.test(len ~ supp, paired = F, data = dose2)
+```
+
+Based on confidence intervals above, we can see that for 0.5 mg ([1.719057, 8.780943]) and 1 mg ([2.802148, 9.057852]) allows us to reject null hypothesis. But at 2 mg ([-3.79807, 3.63807]) interval contains 0 not allowing us to reject the hypothesis.
+
+# Conclusions and Assumptions
+
+Based on the confidence interval analysis above, from the data it can be concluded that dose level of vitamin C has a correlation on tooth length with 2 mg having higher impact than 1 mg which in turn has higher impact that 0.5 mg. 
+
+Also, we can conclude that delivery method does not provide an overall impact. But for lower dosage (0.5 mg and 1 mg) OJ had a higher impact on tooth length while 2 mg dosage delivery method has no impact.
+
+It was assumed that population assignment was randomized and hence equal variances are used. 
